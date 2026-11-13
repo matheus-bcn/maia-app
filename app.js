@@ -70,7 +70,7 @@ async function telaLogin(modo = 'entrar', msg = '') {
   const enviar = async () => {
     go.disabled = true;
     status.textContent = 'Aguarde…';
-    const r = modo === 'criar' ? await sb.auth.signUp({ email: email.value.trim(), password: senha.value }) : await sb.auth.signInWithPassword({ email: email.value.trim(), password: senha.value });
+    const r = modo === 'criar' ? await sb.auth.signUp({ email: email.value.trim(), password: senha.value, options: { emailRedirectTo: location.href.split('#')[0] } }) : await sb.auth.signInWithPassword({ email: email.value.trim(), password: senha.value });
     go.disabled = false;
     if (r.error) { status.textContent = traduz(r.error.message); return; }
     if (modo === 'criar' && !r.data.session) { telaLogin('entrar', 'Conta criada! Confirme pelo link que chegou no seu e-mail e depois entre.'); return; }
