@@ -76,7 +76,9 @@ async function telaLogin(modo = 'entrar', msg = '') {
     if (modo === 'criar' && !r.data.session) { telaLogin('entrar', 'Conta criada! Confirme pelo link que chegou no seu e-mail e depois entre.'); return; }
   };
   go.onclick = enviar;
-  senha.onkeydown = (e) => e.key === 'Enter' && enviar();
+  senha.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') enviar();
+  });
   const esqueci = h('button', { class: 'link', text: 'Esqueci a senha', onclick: async () => {
     if (!email.value.trim()) { status.textContent = 'Digite o e-mail acima primeiro.'; return; }
     const r = await sb.auth.resetPasswordForEmail(email.value.trim(), { redirectTo: location.href.split('#')[0] });
